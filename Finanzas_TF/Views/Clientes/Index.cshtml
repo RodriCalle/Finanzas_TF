@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Finanzas_TF.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Listado de 👨‍👦 Clientes";
+}
+
+<h1 style=" font-size: 2.0rem; margin: 30px 0px; font-weight: 700;">@ViewData["Title"]</h1>
+
+<a asp-action="Create" class="btn btn-primary text-white" style="float:right;margin-bottom: 0px; font-size: 13px; border-radius: 10px 10px 0px 0px; margin-top: 20px; text-transform: uppercase; font-weight: 500;">
+    Registrar Cliente
+</a>
+<table class="table fcard">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RazonSocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RUC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RUC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,84 @@
+﻿@using Finanzas_TF.Models
+@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/js/bootstrap.js">
+    <link rel="stylesheet" href="~/css/login.css">
+
+    <title>eFinance: Login</title>
+    <link rel="icon" href="~/logo.png" asp-append-version="true">
+</head>
+<body>
+
+    <div>
+        <div class="row" style="justify-content:center">
+            <div class="col-md-4">
+                    <p class="blue facebook" style="margin:10%;text-align:center"><img width="100" src="~/logo.png" /></p>
+                <div class="panel" style="height: auto; min-height: 362px">
+                    <p class="black" style="font-size:13px">¡Bienvenido 👋 a la web de <b>eFinance</b>! Ingresa con tu email y contraseña como invitado o usuario frecuente.</p>
+
+                    @using (Html.BeginForm("login", "identity", FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "frm", id = "frm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger", style = "font-size: 12px;text-align:center; align-content:center" })
+                        <div id="formulario">
+                            <div>
+                                <p style=" font-size: 16px; font-weight: 500; margin: 5px 0px;">
+                                    Correo Electronico
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Ingrese su Correo Electronico" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div style="font-size: 16px; font-weight: 500; margin: 5px 0px; margin-bottom: -10px; ">
+                                <p>Contraseña</p>
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Ingrese su Contraseña" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            @if (ViewBag.Error != null)
+                            {
+                                <p class="text-danger" style="font-size: 12px;text-align:center; align-content:center">@ViewBag.Error</p>
+                            }
+                            <input type="submit" class="btn btn-primary btn-lg" value="Ingresar" style="font-weight:bold; width:100%"></input>
+                            <p class="text-center mdpo blue" style="font-size: 1rem">¿No tienes una cuenta? Registrate</p>
+                            <hr>
+                        </div>
+                        <div id="carga" style="display:none; margin:115px; justify-self:center;justify-content:center">
+                            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                        </div>
+                    }
+                </div>
+                <p class="create"><small><span class="bold">Finanzas: </span>Recuerde que este sitio web es unicamente para invitados de la organización para dar mantenimiento de la pagina web.</small></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script>
+     
+        $(function () { //shorthand document.ready function
+            $('#frm').on('submit', function (e) { //use on if jQuery 1.7+
+                console.log("entro")
+                document.getElementById("formulario").style.display = "none";
+                document.getElementById("carga").style.display = "grid";
+            });
+        });
+    </script>
+</body>
+
+</html>

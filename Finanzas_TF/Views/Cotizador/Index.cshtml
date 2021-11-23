@@ -1,0 +1,207 @@
+﻿@model IEnumerable<Finanzas_TF.Models.ReciboHonorarios>
+
+@{
+    ViewData["Title"] = "Cartera 🧮 de Recibos por honorarios";
+}
+
+
+<h1 style=" font-size: 2.0rem; margin: 30px 0px; font-weight: 700;">@ViewData["Title"]</h1>
+
+<p style="margin-top: -25px; margin-bottom: 40px; font-weight: 600; color: green; font-style: italic;">Fecha de hoy
+    @DateTime.Now.ToString("dd/MM/yyyy")</p>
+
+<form asp-action="Calculo" method="post">
+    <div class="row">
+        <div class="col-lg-3">
+
+             Tipo de Tasa:
+            <div class="input-group mb-3">
+                <select class="form-control" name="TipoDeTasa">
+                    <option value=1>Nominal</option>
+                    <option value=0 selected>Efectiva</option>
+                </select>
+            </div>
+
+            Moneda:
+            <div class="input-group mb-3">
+                <select class="form-control" name="Moneda">
+                    <option value=0 selected>Soles (S/.)</option>
+                    <option value=1>Dolares ($)</option>
+                </select>
+            </div>
+
+            Valor a Recibir:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">S/</span>
+                </div>
+                <input type="text" disabled class="form-control disabled" aria-label="" name="ValorARecibir">
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            Tasa Anual:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                </div>
+                <input type="number" step="0.01" name="Tasa" class="form-control" aria-label="">
+            </div>
+
+            Cotización Dolar:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">S/</span>
+                </div>
+                <input type="number" step="0.01" name="Dolar" class="form-control" aria-label="" value="4.00">
+            </div>
+
+            TCEA:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                </div>
+                <input type="number" step="0.01" name="TCEA" class="form-control disabled" disabled aria-label="">
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            Tipo de Año de la tasa:
+            <div class="input-group mb-3">
+                <select class="form-control" name="Anio">
+                    <option value="360" selected>Ordinario</option>
+                    <option value="365">Exacto</option>
+                </select>
+            </div>
+
+            Costes Iniciales:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">S/</span>
+                </div>
+                <input type="number" step="0.01" name="gInicio" class="form-control" aria-label="">
+            </div>
+
+            TEA:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                </div>
+                <input type="text" class="form-control disabled" disabled aria-label="" name="TEA">
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            Fecha descuento:
+            <div class="input-group mb-3">
+                <input class="form-control" name="FechaDescuento" type="date">
+            </div>
+
+            Costes Finales:
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">S/</span>
+                </div>
+                <input type="number" step="0.01" name="gFinal" class="form-control" aria-label="">
+            </div>
+
+            <button class="btn btn-success" style="width:100%" id="calculo" type="submit">Calcular</button>
+            
+        </div>
+    </div>
+</form>
+
+
+<table class="table fcard">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monto)
+            </th>
+            <th>Fecha de Vencimiento</th>
+            <th>N° Días</th>
+            <th>
+                TEP
+            </th>
+            <th>
+                d
+            </th>
+            <th>
+                Descuento
+            </th>
+            <th>
+                Coste Inicial
+            </th>
+            <th>
+                Coste Final
+            </th>
+            <th>
+                Valor Neto
+            </th>
+            <th>
+                Valor a Recibir
+            </th>
+            <th>
+                Flujo
+            </th>
+            <th>
+                TCEA
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @(item.Cliente.RUC +" - "+ item.Cliente.RazonSocial)
+                </td>
+                <td>
+                    @(item.Moneda==0?"S/":"$")@Html.DisplayFor(modelItem =>item.Monto)
+                </td>
+                <td>
+                    @(item.FechaPago.ToString("dd/MM/yyyy"))
+                </td>
+                <td id="DIAS">
+                    -
+                </td>
+                <td id="TEP">
+                    -
+                </td>
+                <td id="D">
+                    -
+                </td>
+                <td id="DESCUENTO">
+                    -
+                </td>
+                <td id="COSTEINICIAL">
+                    -
+                </td>
+                <td id="COSTEFINAL">
+                    -
+                </td>
+                <td id="VALORNETO">
+                    -
+                </td>
+                <td id="VALORRECIBIR">
+                    -
+                </td>
+                <td id="FLUJO">
+                    -
+                </td>
+                <td id="TCEA">
+                    -
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
