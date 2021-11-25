@@ -64,7 +64,7 @@ namespace Finanzas_TF.Controllers
             if (ModelState.IsValid)
             {
                 reciboHonorarios.Id = Guid.NewGuid();
-                if (reciboHonorarios.MontoInicial > 1500)
+                if ( (reciboHonorarios.MontoInicial > 1500 && reciboHonorarios.Moneda == 0) || (reciboHonorarios.MontoInicial * 4 > 1500 && reciboHonorarios.Moneda == 1) )
                 {
                     reciboHonorarios.Retenido = reciboHonorarios.MontoInicial * (decimal)0.08;
                     reciboHonorarios.Monto = reciboHonorarios.MontoInicial * (decimal)0.92;
@@ -115,7 +115,7 @@ namespace Finanzas_TF.Controllers
             {
                 try
                 {
-                    if (reciboHonorarios.MontoInicial > 1500)
+                    if ( (reciboHonorarios.MontoInicial > 1500 && reciboHonorarios.Moneda == 0) || (reciboHonorarios.MontoInicial * 4 > 1500 && reciboHonorarios.Moneda == 1) )
                     {
                         reciboHonorarios.Retenido = reciboHonorarios.MontoInicial * (decimal)0.08;
                         reciboHonorarios.Monto = reciboHonorarios.MontoInicial * (decimal)0.92;
