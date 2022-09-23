@@ -1,2 +1,2 @@
 # Finanzas_TF
-Trabajo Final para el curso de finanzas (Tema: Cartera de recibos por honorarios)
+Trabajo Final para el curso de finanzas (Tema: Cartera de recibos por honorarios) por Rodrigo Calle Galdos
